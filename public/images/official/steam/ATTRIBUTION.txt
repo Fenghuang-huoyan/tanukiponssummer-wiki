@@ -1,0 +1,80 @@
+Official Steam store assets for TANUKI: Pon's Summer (AppID 3218570).
+Self-hosted so the wiki does not hotlink the Steam CDN at page-view time.
+The bytes were downloaded from the Steam store CDN on 12 Nov 2026.
+Fan site: not affiliated with Denkiworks, CRITICAL REFLEX, Valve, or Steam.
+Store page: https://store.steampowered.com/app/3218570/TANUKI_Pons_Summer/
+Appdetails header and capsule URLs use asset cache t=1794331328.
+The 616x353 capsule hash was read from the English store page HTML the same day.
+
+library-hero.jpg
+  Steam library hero, 1920x620
+  https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3218570/library_hero.jpg
+  The same bytes also answered at https://cdn.akamai.steamstatic.com/steam/apps/3218570/library_hero.jpg
+
+library-hero-2x.jpg
+  Steam library hero, 3840x1240
+  https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3218570/library_hero_2x.jpg
+
+library-header.jpg
+  Steam library header, 460x215
+  https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3218570/library_header.jpg
+
+header.jpg
+  Store header from appdetails header_image, 460x215 (hashed path)
+  https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3218570/03a5efdc08ce01b4067a4aed0f0601e5de22790b/header.jpg?t=1794331328
+  The unhashed header.jpg URL also returned HTTP 200 on 12 Nov 2026 and was a different byte size (68786 vs 48775). It is not a second file in this folder.
+
+capsule-616x353.jpg
+  Store capsule, 616x353 (hashed path from the store page)
+  https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3218570/71453f1e6e3969834641543ef3539378b31fa569/capsule_616x353.jpg?t=1794331328
+
+capsule-231x87.jpg
+  Small store capsule, 231x87 (hashed path from appdetails)
+  https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3218570/8dd1188ceef8ebc4ee7b9b74fdb0218a80dd9434/capsule_231x87.jpg?t=1794331328
+
+Screenshots are the 600x338 store thumbnails from appdetails on 12 Nov 2026 (t=1794331328).
+Full-size 1920x1080 files exist on the CDN at the same paths with .1920x1080.jpg. This site stores the thumbnails.
+
+ss-00.jpg
+  Pon rides a red BMX through tall grass with a stack of parcels above the front basket.
+  https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3218570/d2fefea04fbd68249ecc1996a4f2a60d1f70c900/ss_d2fefea04fbd68249ecc1996a4f2a60d1f70c900.600x338.jpg?t=1794331328
+
+ss-01.jpg
+  Post office counter. Pon faces a clerk and a coworker. No name is printed on this frame.
+  https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3218570/d26c9b34d6d940cb758180fff623adaba4347a3f/ss_d26c9b34d6d940cb758180fff623adaba4347a3f.600x338.jpg?t=1794331328
+
+ss-02.jpg
+  Pon wheelies a red BMX on a road beside a five-story pagoda.
+  https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3218570/dceec516ffbe16260567eeeecb0c74833eb0e83d/ss_dceec516ffbe16260567eeeecb0c74833eb0e83d.600x338.jpg?t=1794331328
+
+ss-03.jpg
+  Pon fishes from a wooden pier, with a float in the water.
+  https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3218570/d1f8ac0456b4d75b9b875ab05b6b635bbb3fd3d9/ss_d1f8ac0456b4d75b9b875ab05b6b635bbb3fd3d9.600x338.jpg?t=1794331328
+
+ss-04.jpg
+  Pon rides a dirt path with one parcel in the front basket. A torii is visible in the distance.
+  https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3218570/4761cc2efb2ba809a58c9c48d01d32c31d30f6c1/ss_4761cc2efb2ba809a58c9c48d01d32c31d30f6c1.600x338.jpg?t=1794331328
+
+ss-05.jpg
+  A dock, a boat, a crane, and packages in the water. The store page does not caption the crane as a job.
+  https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3218570/b708cacacd6dc02b680c6fabf9ce2b1b53ef74b5/ss_b708cacacd6dc02b680c6fabf9ce2b1b53ef74b5.600x338.jpg?t=1794331328
+
+ss-06.jpg
+  A cluttered wooden room with a round window, a television, and a low table.
+  https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3218570/dec85120ee2ae5ada5530014378d6b2e5454ca22/ss_dec85120ee2ae5ada5530014378d6b2e5454ca22.600x338.jpg?t=1794331328
+
+ss-07.jpg
+  Pon holds a large red beetle in a flowered clearing.
+  https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3218570/76e4c5f52b578d8340373df01a09f1179e9411a1/ss_76e4c5f52b578d8340373df01a09f1179e9411a1.600x338.jpg?t=1794331328
+
+ss-08.jpg
+  A bar. The on-screen name is Sakamori. The line reads "Let's rock, my little friend!"
+  https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3218570/7272688f92f18bfdf8ce061f846376c2ddd52fe4/ss_7272688f92f18bfdf8ce061f846376c2ddd52fe4.600x338.jpg?t=1794331328
+
+ss-09.jpg
+  Pon grinds a yellow rail above tiled roofs, with a bridge and the sea behind him.
+  https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3218570/ce282135365630a537cced541231c9a717355518/ss_ce282135365630a537cced541231c9a717355518.600x338.jpg?t=1794331328
+
+ss-10.jpg
+  An arcade with claw machines and cabinets. Pon carries a flat parcel.
+  https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3218570/5e6794d63edb20695f88f4d5115240cab9a8b61c/ss_5e6794d63edb20695f88f4d5115240cab9a8b61c.600x338.jpg?t=1794331328

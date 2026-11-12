@@ -1,0 +1,12 @@
+{
+  "release": "10 Nov 2026",
+  "price": "$19.99",
+  "priceNote": "USD on Steam, 12 Nov 2026. The discount field was 0. The publisher release also prints 15.99 GBP and 19.99 EUR.",
+  "players": "Single-player",
+  "playersNote": "Only player-mode category on the Steam list. No co-op or PvP category was present.",
+  "reviews": "Windows",
+  "reviewsNote": "Steam platforms for app 3218570. Mac and Linux are false. Consoles are in the publisher release, not in that field.",
+  "modes": "43",
+  "modesNote": "Steam achievements. Ten names are highlighted. The payload has no unlock text.",
+  "platforms": "Windows"
+}

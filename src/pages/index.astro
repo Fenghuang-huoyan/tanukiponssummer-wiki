@@ -1,0 +1,266 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@framework/layouts/BaseLayout.astro';
+import QuickAnswer from '@framework/components/QuickAnswer.astro';
+import AdSlot from '@framework/components/AdSlot.astro';
+import FaqList from '@framework/components/FaqList.astro';
+import { loadData } from '@framework/lib/content';
+import { siteConfig } from '@site/site.config';
+import { faqJsonLd, websiteJsonLd } from '@framework/lib/seo';
+
+const meta = loadData<{
+  release: string;
+  price: string;
+  priceNote: string;
+  players: string;
+  playersNote: string;
+  reviews: string;
+  reviewsNote: string;
+  modes: string;
+  modesNote: string;
+  platforms: string;
+}>('meta');
+
+const faq = loadData<{ q: string; a: string; featured?: boolean }[]>('faq');
+const pages = (await getCollection('pages')).sort((a, b) => a.data.order - b.data.order);
+
+const art = {
+  header: '/images/official/steam/header.jpg',
+  hero: '/images/official/steam/library-hero.jpg',
+  hero2x: '/images/official/steam/library-hero-2x.jpg',
+  capsule: '/images/official/steam/capsule-616x353.jpg',
+  mail: '/images/official/steam/ss-00.jpg',
+  office: '/images/official/steam/ss-01.jpg',
+  wheelie: '/images/official/steam/ss-02.jpg',
+  beetle: '/images/official/steam/ss-07.jpg',
+  bar: '/images/official/steam/ss-08.jpg',
+  rail: '/images/official/steam/ss-09.jpg',
+};
+
+const guideArt: Record<string, string> = {
+  guide: art.capsule,
+  delivery: art.mail,
+  shrine: art.hero,
+  bmx: art.rail,
+  about: art.header,
+};
+
+const doors = [
+  {
+    href: '/guide',
+    num: '01',
+    title: 'Guide',
+    text: 'The month, the Post Office job, the festival, and the lines the store never printed.',
+    image: art.capsule,
+    imageAlt: 'Pon in a postal cap waves from a red BMX on the official Steam capsule, with parcels and the game title beside him',
+  },
+  {
+    href: '/delivery',
+    num: '02',
+    title: 'Delivery',
+    text: 'What “delivery routes” means when no map was published. Awkward boxes, and nothing past that.',
+    image: art.mail,
+    imageAlt: 'Pon rides through tall grass with a stack of parcels balanced above the basket of a red BMX',
+  },
+  {
+    href: '/shrine',
+    num: '03',
+    title: 'Shrine',
+    text: 'Rebuild, upgrade, and decorate before the festival. No cost list and no build order.',
+    image: art.hero,
+    imageAlt: 'A small wooden shrine sits in a huge tree above a green town on the official Steam library hero',
+  },
+  {
+    href: '/bmx',
+    num: '04',
+    title: 'BMX',
+    text: 'Ramps, rails, and two official counts of the challenges. No numbered list.',
+    image: art.rail,
+    imageAlt: 'Pon grinds a yellow rail on a red BMX above tiled roofs, with a bridge and the sea behind him',
+  },
+];
+
+const stills = [
+  {
+    src: art.mail,
+    caption: 'Parcels on the bike',
+    alt: 'Official Steam screenshot: Pon rides a red BMX through tall grass with a tall stack of parcels above the front basket',
+  },
+  {
+    src: art.office,
+    caption: 'Post office counter',
+    alt: 'Official Steam screenshot: Pon stands in a post office facing a clerk at the counter and a coworker in a blue dress',
+  },
+  {
+    src: art.rail,
+    caption: 'Rail above the roofs',
+    alt: 'Official Steam screenshot: Pon grinds a yellow rail on a red BMX above tiled roofs',
+  },
+  {
+    src: art.wheelie,
+    caption: 'Wheelie by the pagoda',
+    alt: 'Official Steam screenshot: Pon wheelies a red BMX on a road beside a five-story pagoda',
+  },
+  {
+    src: art.bar,
+    caption: 'Sakamori at the bar',
+    alt: "Official Steam screenshot: the dialogue box names Sakamori and reads Let's rock, my little friend",
+  },
+  {
+    src: art.beetle,
+    caption: 'A beetle, not a checklist',
+    alt: 'Official Steam screenshot: Pon holds a large red beetle in a flowered clearing',
+  },
+];
+---
+<BaseLayout
+  title={siteConfig.homeTitle}
+  description={siteConfig.homeDescription}
+  jsonLd={[
+    websiteJsonLd(),
+    faqJsonLd(faq.filter((item) => item.featured).map((item) => ({ q: item.q, a: item.a }))),
+  ]}
+>
+  <main id="content">
+    <div class="shell">
+      <p class="tape">
+        <span>Fan guide · not affiliated with Denkiworks or CRITICAL REFLEX</span>
+        <span>Steam App {siteConfig.steamAppId}</span>
+        <span>{siteConfig.version.label}</span>
+      </p>
+
+      <section class="town-hero">
+        <img
+          class="hero-art"
+          src={siteConfig.art.hero}
+          srcset={`${art.hero} 1920w, ${art.hero2x} 3840w`}
+          sizes="(min-width: 1536px) 1536px, 100vw"
+          alt={siteConfig.art.heroAlt}
+          width="1920"
+          height="620"
+          fetchpriority="high"
+          decoding="async"
+        />
+        <div class="hero-panel">
+          <p class="kicker">{siteConfig.developer} · released {meta.release}</p>
+          <h1>TANUKI: Pon's Summer is out.</h1>
+          <p class="lede">
+            English pages for the life sim on a BMX: what the store says about the Post Office job, the shrine, and the challenges.
+            The game unlocked on {meta.release}. Where a route, a price, or a challenge name was never printed, the page says so.
+          </p>
+          <div class="cta-row">
+            <a class="btn" href="/guide">Guide</a>
+            <a class="btn ghost" href="/delivery">Delivery</a>
+            <a class="btn ghost" href={siteConfig.steamUrl}>View on Steam</a>
+          </div>
+          <p class="version-note">{siteConfig.version.detail}</p>
+        </div>
+      </section>
+      <p class="art-credit">
+        Library hero, capsules, header, and screenshots are official Steam store assets for App {siteConfig.steamAppId}, saved from the store CDN.
+        Credits and source URLs: <a href="/images/official/steam/ATTRIBUTION.txt">ATTRIBUTION.txt</a>.
+      </p>
+
+      <section class="section">
+        <h2>Four doors</h2>
+        <p class="section-intro">
+          Open the guide, the delivery routes, the shrine, or the BMX challenges. There is no codes page. The sources checked do not list a redeem program.
+        </p>
+        <div class="door-grid">
+          {doors.map((door) => (
+            <a class="door" href={door.href}>
+              <span class="card-art">
+                <img src={door.image} alt={door.imageAlt} width="600" height="338" decoding="async" />
+                <span class="num">{door.num}</span>
+              </span>
+              <span class="card-copy">
+                <h3>{door.title}</h3>
+                <p>{door.text}</p>
+              </span>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section class="section" aria-label="Official Steam screenshots">
+        <h2>The store’s own frames</h2>
+        <p class="section-intro">
+          Six of the eleven screenshots on the Steam page. A picture of a stack of parcels is not a route, and a rail grind is not a named challenge.
+        </p>
+        <div class="still-row">
+          {stills.map((still) => (
+            <figure>
+              <img src={still.src} alt={still.alt} width="600" height="338" loading="lazy" decoding="async" />
+              <figcaption>{still.caption}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+
+      <section class="stat-row" aria-label="Steam figures">
+        <div class="stat"><strong>{meta.release}</strong><span>Steam release date. coming_soon was false on 12 Nov 2026.</span></div>
+        <div class="stat"><strong>{meta.price}</strong><span>{meta.priceNote}</span></div>
+        <div class="stat"><strong>{meta.reviews}</strong><span>{meta.reviewsNote}</span></div>
+        <div class="stat"><strong>{meta.players}</strong><span>{meta.playersNote}</span></div>
+      </section>
+
+      <section class="section home-quick">
+        <QuickAnswer
+          sentences={[
+            "TANUKI: Pon's Summer is a single-player life sim from Denkiworks, published by CRITICAL REFLEX, on Steam (AppID 3218570). It released 10 November 2026. On 12 November 2026 the app was no longer marked coming soon. The Steam price was $19.99, and the platforms field was Windows only.",
+            'The store follows Pon, a well meaning and a bit lazy tanuki with a part-time Post Office job. He has a month to deliver packages, make friends, and restore a shrine before the Tanuki Festival. The longer text calls that event the Great Tanuki Festival.',
+            'The press release the same day also lists Nintendo Switch, Switch 2, PlayStation 4 and 5, Xbox consoles, Xbox on PC, and Xbox Game Pass, at 19.99 USD, 15.99 GBP, or 19.99 EUR. Those storefronts are not the Steam platforms field.',
+            'There is no redeem-code list, no printed route map, and no numbered BMX challenge index. The store says “over 100” challenges. Two announcements say “100 and 1.” This site keeps both sentences and invents neither list.',
+          ]}
+        />
+        <AdSlot name="afterQuickAnswer" />
+      </section>
+
+      <section class="section">
+        <h2>The pages</h2>
+        <p class="section-intro">
+          English only. A line from the Steam page or an official post is labeled with the day it was read. A missing stat stays missing.
+        </p>
+        <div class="card-grid">
+          {pages.map((page) => (
+            <a class="guide-card" href={`/${page.id}`}>
+              <span class="card-art">
+                <img src={guideArt[page.id] ?? art.header} alt="" width="600" height="338" loading="lazy" decoding="async" />
+              </span>
+              <span class="card-copy">
+                <span class="section-tag">{page.data.section}</span>
+                <h3>{page.data.h1}</h3>
+                <p>{page.data.description}</p>
+              </span>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="scope">
+          <div>
+            <h2>What this wiki is for</h2>
+            <p>
+              The store page, the publisher page, and the launch release live at {siteConfig.databases.map((db, i) => (<><a href={db.href}>{db.label}</a>{i < siteConfig.databases.length - 1 ? ', ' : ''}</>))}. This site is the skim: the job, the shrine, and the bike, written only as far as those sources go.
+            </p>
+            <p>
+              The full game unlocked on {meta.release}. If the client and this page disagree, trust the client.
+            </p>
+          </div>
+          <div>
+            <h2>In Steam’s words</h2>
+            <p>
+              {siteConfig.developer} develops the game. {siteConfig.publisher} publishes it. Platforms on the API: {meta.platforms}. Genres: Casual, Indie, and Simulation. Steam lists {meta.modes} achievements and does not attach unlock text to the ten highlighted names. The support email on the store page is {siteConfig.supportEmail}.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section home-faq">
+        <h2>Short answers</h2>
+        <FaqList featuredOnly />
+      </section>
+    </div>
+  </main>
+</BaseLayout>
