@@ -20,7 +20,7 @@ export const siteConfig = {
   homeDescription:
     "Unofficial English guide to TANUKI: Pon's Summer (Steam AppID 3218570). Denkiworks and CRITICAL REFLEX, released 10 Nov 2026. What the store says about mail routes, shrine upgrades, and BMX challenges.",
   analytics: {
-    gaId: '',
+    gaId: 'G-JM7HW2NZLJ',
   },
   art: {
     hero: '/images/official/steam/library-hero.jpg',
