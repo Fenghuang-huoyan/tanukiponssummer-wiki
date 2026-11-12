@@ -1,0 +1,48 @@
+[
+  {
+    "q": "When did TANUKI: Pon's Summer release?",
+    "a": "Steam’s release_date on 12 November 2026 is Nov 10, 2026, with coming_soon false. The English store page shows the same date. A CRITICAL REFLEX press release the same day says the game is out.",
+    "featured": true
+  },
+  {
+    "q": "Who develops and publishes TANUKI: Pon's Summer?",
+    "a": "Steam lists developer Denkiworks and publisher CRITICAL REFLEX. The 10 November 2026 press release says Denkiworks is based in Kyoto and that this is the studio’s debut, from three co-founders who previously worked on Cursed to Golf. This wiki is not affiliated with Denkiworks, CRITICAL REFLEX, or Valve.",
+    "featured": true
+  },
+  {
+    "q": "What kind of game is TANUKI: Pon's Summer?",
+    "a": "Steam’s short description follows Pon, a well meaning and a bit lazy tanuki with a part-time Post Office job, as he delivers packages, makes friends, and restores a shrine before the Tanuki Festival. Genres are Casual, Indie, and Simulation. The publisher page calls it a cute life sim with BMX tricks. It is single-player.",
+    "featured": true
+  },
+  {
+    "q": "Are there TANUKI: Pon's Summer codes?",
+    "a": "No redeem-code list was on the Steam store page, the publisher page, the 10 November 2026 press release, or the Steam announcements checked on 12 November 2026. The only extra app id on the base game was the soundtrack, still marked coming soon. This site has no codes page.",
+    "featured": true
+  },
+  {
+    "q": "Does the Steam version run on Mac or Linux?",
+    "a": "The appdetails platforms field on 12 November 2026 lists Windows only. Mac and Linux are false. The press release also lists Nintendo Switch, Nintendo Switch 2, PlayStation 5, PlayStation 4, Xbox Series X|S, Xbox One, Xbox on PC, and Xbox Game Pass. Those are other storefronts, not Mac or Linux builds of the Steam app.",
+    "featured": true
+  },
+  {
+    "q": "Is this site official?",
+    "a": "No. tanukiponssummer.wiki is a fan guide. It is not affiliated with Denkiworks, CRITICAL REFLEX, or Valve. Account help uses support@criticalreflex.com, the address printed on the Steam store page. That mailbox is not this wiki’s, and this site does not read it.",
+    "featured": true
+  },
+  {
+    "q": "How many BMX challenges are there?",
+    "a": "The Steam store page and the 10 November 2026 press release say over 100 BMX challenges. Two Steam announcements, on 28 October 2026 and 10 November 2026, say 100 and 1. No named challenge list was published, so this site does not number them."
+  },
+  {
+    "q": "Is there a delivery-route map or a shrine upgrade tree?",
+    "a": "No. The store says you learn routes and that you rebuild, upgrade, and decorate the shrine with money and rewards. It does not print a route list, a map, costs, or an upgrade order. Pages here stop at that sentence."
+  },
+  {
+    "q": "What PC does the Steam version ask for?",
+    "a": "Minimum on 12 November 2026: Windows 10 or later, a 2.6 GHz quad-core or similar, 8 GB RAM, Nvidia GeForce 650 or AMD Radeon HD 7750 with at least 2 GB VRAM, DirectX 11, and 3 GB of space. Recommended: Windows 10 or later, Intel Core i5 3 GHz or AMD Ryzen 5 3 GHz, 8 GB RAM, Nvidia GeForce GTX 950 or AMD Radeon HD 7970 with at least 2 GB VRAM, DirectX 11, and 3 GB."
+  },
+  {
+    "q": "Do demo saves carry into the full game?",
+    "a": "Developer posts disagree in scope. On 26 August 2026 and 28 October 2026 they say the first three days of the demo carry over. The 10 November 2026 launch post says not to delete demo saves because the progress transfers automatically. This site did not transfer a save, and the base game’s appdetails dlc list did not include a demo app id."
+  }
+]
