@@ -9,7 +9,7 @@ quickAnswer:
   - "TANUKI: Pon's Summer Guide is a fan site for tanukiponssummer.wiki. It is not affiliated with Denkiworks, CRITICAL REFLEX, or Valve."
   - "The pages are English on purpose. Steam’s language string lists fifteen languages. This wiki writes in one."
   - "The artwork is official Steam store art for AppID 3218570, stored with the site. Credits are in the attribution file next to the images."
-  - "Analytics and ads are off. analytics.gaId is empty, and the ad slot is disabled with an empty id. There is no redeem-code page."
+  - "GA4 G-JM7HW2NZLJ loads on content pages. The Adsterra Native Banner after Quick Answer is enabled for this domain only. There is no redeem-code page."
 sources:
   - label: "Steam store — TANUKI: Pon's Summer"
     url: "https://store.steampowered.com/app/3218570/TANUKI_Pons_Summer/"
@@ -54,9 +54,9 @@ The library hero, the library header, the capsules, the store header, and the sc
 
 The site is static. It has no accounts and does not ask for your Steam login or your TANUKI: Pon's Summer save.
 
-`analytics.gaId` is an empty string. The base layout does not load Google Analytics.
+GA4 `G-JM7HW2NZLJ` is set in `analytics.gaId`. The base layout loads that tag on content pages.
 
-The Adsterra slot named `afterQuickAnswer` is turned off. `ads.config` sets `enabled` to false, and the slot id and script URL are empty. No advertising script is requested. The 404 page does not render a slot.
+The Adsterra Native Banner slot named `afterQuickAnswer` is enabled for tanukiponssummer.wiki. Zone id `f989d0f6f9b21ee2ee7c4c62b3e3d68d` loads from `https://bauval.org/21/f989d0f6f9b21ee2ee7c4c62b3e3d68d` on the homepage and guide pages. No advertising script from another game is included. Adult and sensitive categories stay off. The 404 page does not render a slot.
 
 The same privacy note is in the footer of every page, under the heading Privacy. The disclaimer paragraph in that footer is the short form of this page.
 
