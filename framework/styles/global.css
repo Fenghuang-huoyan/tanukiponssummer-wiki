@@ -491,6 +491,21 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 700; letter-spacing: 0.01em
   padding: 0.45rem 0.5rem;
   border-bottom: 1px solid var(--line);
 }
+/* The guide card clips with overflow:hidden so the banner can bleed to the
+   rounded corners. A wide fact table then loses its right edge instead of
+   wrapping. Below this width the card's content box is narrower than that
+   table's min-content (~318px). Code tables keep their own scroll wrapper. */
+@media (max-width: 382px) {
+  .prose table:not(.code-table) {
+    table-layout: fixed;
+  }
+  .prose table:not(.code-table) :is(th, td):first-child {
+    width: 8rem;
+  }
+  .prose table:not(.code-table) :is(th, td) {
+    overflow-wrap: anywhere;
+  }
+}
 .prose th { font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
 .prose img {
   border-radius: 14px;
