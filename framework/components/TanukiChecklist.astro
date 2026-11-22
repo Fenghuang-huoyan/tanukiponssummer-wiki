@@ -1,0 +1,532 @@
+---
+import { loadData } from '../lib/content';
+
+interface AchievementItem {
+  index: number;
+  id: string;
+  apiName: string;
+  name: string;
+  description: string;
+  percent: number;
+  category: string;
+  categoryLabel: string;
+  guideHref: string;
+}
+
+const items = loadData<AchievementItem[]>('achievements');
+
+const categories = [
+  { id: 'all', label: 'All Milestones', count: items.length },
+  { id: 'shrine-story', label: 'Shrine & Story', count: items.filter((i) => i.category === 'shrine-story').length },
+  { id: 'jobs', label: 'Resident Jobs', count: items.filter((i) => i.category === 'jobs').length },
+  { id: 'decorations', label: 'Decorations', count: items.filter((i) => i.category === 'decorations').length },
+  { id: 'bmx', label: 'BMX & Combos', count: items.filter((i) => i.category === 'bmx').length },
+  { id: 'fishing', label: 'Fishing', count: items.filter((i) => i.category === 'fishing').length },
+  { id: 'insects', label: 'Insects', count: items.filter((i) => i.category === 'insects').length },
+];
+
+const festivalChecks = [
+  {
+    id: 'fest_benches',
+    title: 'Festival check: Enough benches placed',
+    detail: 'Named in the 10 Nov 2026 Steam launch announcement. Exact numerical bench count is Unverified / ❓.',
+  },
+  {
+    id: 'fest_lamps',
+    title: 'Festival check: Enough lamps placed',
+    detail: 'Named in the 10 Nov 2026 Steam launch announcement. Exact numerical lamp count is Unverified / ❓.',
+  },
+  {
+    id: 'fest_torii',
+    title: 'Festival check: Standing torii gates',
+    detail: 'Named in the 10 Nov 2026 launch post alongside the Torii Troubles achievement. Structural pass/fail threshold beyond the achievement is Unverified / ❓.',
+  },
+];
+---
+
+<section class="tanuki-tool" id="tanuki-checklist-app" aria-label="Interactive TANUKI completion checklist">
+  <div class="tool-summary">
+    <div class="tool-score-row">
+      <div>
+        <p class="tool-kicker">Saved locally in your browser · No login required</p>
+        <p class="tool-headline">
+          <strong id="chk-done-count">0</strong> / <span>{items.length}</span> official Steam milestones checked
+          (<span id="chk-done-pct">0%</span>)
+        </p>
+      </div>
+      <button type="button" class="tool-reset" id="chk-reset-btn">Reset progress</button>
+    </div>
+    <div class="tool-bar" role="progressbar" aria-valuemin="0" aria-valuemax={items.length} aria-valuenow="0" id="chk-progressbar">
+      <div class="tool-bar-fill" id="chk-bar-fill" style="width: 0%"></div>
+    </div>
+    <div class="tool-cat-meters">
+      {categories.filter((c) => c.id !== 'all').map((c) => (
+        <div class="cat-meter" data-meter-cat={c.id}>
+          <span>{c.label}</span>
+          <strong><b data-meter-num={c.id}>0</b>/{c.count}</strong>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <div class="tool-controls">
+    <div class="tool-pills" role="group" aria-label="Filter by category">
+      {categories.map((cat, idx) => (
+        <button
+          type="button"
+          class={`tool-pill${idx === 0 ? ' active' : ''}`}
+          data-filter-cat={cat.id}
+          aria-pressed={idx === 0 ? 'true' : 'false'}
+        >
+          {cat.label} ({cat.count})
+        </button>
+      ))}
+    </div>
+    <div class="tool-search-row">
+      <input
+        type="search"
+        id="chk-search"
+        class="tool-input"
+        placeholder="Search resident, shrine repair, BMX score, or task..."
+        aria-label="Search checklist items"
+      />
+      <label class="tool-hide-toggle">
+        <input type="checkbox" id="chk-hide-done" />
+        <span>Hide completed</span>
+      </label>
+    </div>
+  </div>
+
+  <ul class="chk-list" id="chk-list">
+    {items.map((item) => (
+      <li
+        class="chk-item"
+        data-item-id={item.id}
+        data-cat={item.category}
+        data-search={`${item.name} ${item.description} ${item.categoryLabel}`.toLowerCase()}
+      >
+        <label class="chk-label">
+          <input type="checkbox" class="chk-box" data-check-id={item.id} />
+          <span class="chk-body">
+            <span class="chk-top">
+              <strong class="chk-title">{item.name}</strong>
+              <span class="badge newest">{item.categoryLabel}</span>
+              <span class="badge">{item.percent}% on Steam</span>
+              <span class="chk-verified">Verified / ✔</span>
+            </span>
+            <span class="chk-desc">{item.description}</span>
+          </span>
+        </label>
+        <a class="chk-link" href={item.guideHref}>Notes →</a>
+      </li>
+    ))}
+  </ul>
+  <p class="chk-empty" id="chk-empty" hidden>No milestones match your current filter.</p>
+
+  <div class="fest-box">
+    <h3>Optional festival-day reminder notes (non-achievement checks)</h3>
+    <p class="fest-sub">
+      The 10 November 2026 launch post mentions these three checks for festival day. They do not have separate Steam achievement counters, and exact required quantities are <strong>Unverified / ❓</strong>.
+    </p>
+    <ul class="chk-list">
+      {festivalChecks.map((fc) => (
+        <li class="chk-item fest-item" data-fest-id={fc.id}>
+          <label class="chk-label">
+            <input type="checkbox" class="chk-box" data-fest-check={fc.id} />
+            <span class="chk-body">
+              <span class="chk-top">
+                <strong class="chk-title">{fc.title}</strong>
+                <span class="badge conflict">Quota Unverified / ❓</span>
+              </span>
+              <span class="chk-desc">{fc.detail}</span>
+            </span>
+          </label>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<script>
+  const STORAGE_KEY = 'tanuki_pons_summer_checklist_v1';
+  const root = document.getElementById('tanuki-checklist-app');
+  if (root) {
+    let saved: Record<string, boolean> = {};
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) saved = JSON.parse(raw) || {};
+    } catch {
+      saved = {};
+    }
+
+    const boxes = Array.from(root.querySelectorAll<HTMLInputElement>('input[data-check-id]'));
+    const festBoxes = Array.from(root.querySelectorAll<HTMLInputElement>('input[data-fest-check]'));
+    const listItems = Array.from(root.querySelectorAll<HTMLLIElement>('#chk-list > .chk-item'));
+    const filterBtns = Array.from(root.querySelectorAll<HTMLButtonElement>('button[data-filter-cat]'));
+    const searchInput = document.getElementById('chk-search') as HTMLInputElement | null;
+    const hideDoneInput = document.getElementById('chk-hide-done') as HTMLInputElement | null;
+    const doneCountEl = document.getElementById('chk-done-count');
+    const donePctEl = document.getElementById('chk-done-pct');
+    const barFillEl = document.getElementById('chk-bar-fill');
+    const progressEl = document.getElementById('chk-progressbar');
+    const emptyEl = document.getElementById('chk-empty');
+    const resetBtn = document.getElementById('chk-reset-btn') as HTMLButtonElement | null;
+
+    let activeCat = 'all';
+    let resetArmed = false;
+
+    function persist() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+      } catch {
+        /* ignore quota or private mode errors */
+      }
+    }
+
+    function refreshStatsAndFilters() {
+      const total = boxes.length;
+      let done = 0;
+      const catCounts: Record<string, number> = {};
+
+      boxes.forEach((box) => {
+        const id = box.dataset.checkId || '';
+        const checked = Boolean(saved[id]);
+        box.checked = checked;
+        const li = box.closest('.chk-item') as HTMLLIElement | null;
+        if (li) {
+          li.classList.toggle('is-done', checked);
+          const cat = li.dataset.cat || '';
+          if (checked) {
+            done += 1;
+            catCounts[cat] = (catCounts[cat] || 0) + 1;
+          }
+        }
+      });
+
+      festBoxes.forEach((box) => {
+        const id = box.dataset.festCheck || '';
+        const checked = Boolean(saved[id]);
+        box.checked = checked;
+        const li = box.closest('.chk-item');
+        if (li) li.classList.toggle('is-done', checked);
+      });
+
+      const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+      if (doneCountEl) doneCountEl.textContent = String(done);
+      if (donePctEl) donePctEl.textContent = `${pct}%`;
+      if (barFillEl) barFillEl.style.width = `${pct}%`;
+      if (progressEl) progressEl.setAttribute('aria-valuenow', String(done));
+
+      root?.querySelectorAll<HTMLElement>('[data-meter-num]').forEach((el) => {
+        const c = el.dataset.meterNum || '';
+        el.textContent = String(catCounts[c] || 0);
+      });
+
+      const query = (searchInput?.value || '').trim().toLowerCase();
+      const hideDone = Boolean(hideDoneInput?.checked);
+      let visibleCount = 0;
+
+      listItems.forEach((li) => {
+        const catMatch = activeCat === 'all' || li.dataset.cat === activeCat;
+        const textMatch = !query || (li.dataset.search || '').includes(query);
+        const doneMatch = !hideDone || !li.classList.contains('is-done');
+        const show = catMatch && textMatch && doneMatch;
+        li.hidden = !show;
+        if (show) visibleCount += 1;
+      });
+
+      if (emptyEl) emptyEl.hidden = visibleCount > 0;
+    }
+
+    boxes.forEach((box) => {
+      box.addEventListener('change', () => {
+        const id = box.dataset.checkId || '';
+        if (box.checked) saved[id] = true;
+        else delete saved[id];
+        persist();
+        refreshStatsAndFilters();
+      });
+    });
+
+    festBoxes.forEach((box) => {
+      box.addEventListener('change', () => {
+        const id = box.dataset.festCheck || '';
+        if (box.checked) saved[id] = true;
+        else delete saved[id];
+        persist();
+        refreshStatsAndFilters();
+      });
+    });
+
+    filterBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        activeCat = btn.dataset.filterCat || 'all';
+        filterBtns.forEach((b) => {
+          const on = b === btn;
+          b.classList.toggle('active', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        refreshStatsAndFilters();
+      });
+    });
+
+    searchInput?.addEventListener('input', refreshStatsAndFilters);
+    hideDoneInput?.addEventListener('change', refreshStatsAndFilters);
+
+    resetBtn?.addEventListener('click', () => {
+      if (!resetArmed) {
+        resetArmed = true;
+        resetBtn.textContent = 'Click again to clear';
+        setTimeout(() => {
+          if (resetArmed) {
+            resetArmed = false;
+            resetBtn.textContent = 'Reset progress';
+          }
+        }, 3500);
+        return;
+      }
+      resetArmed = false;
+      resetBtn.textContent = 'Reset progress';
+      saved = {};
+      persist();
+      refreshStatsAndFilters();
+    });
+
+    refreshStatsAndFilters();
+  }
+</script>
+
+<style>
+  .tanuki-tool {
+    margin: 1.1rem 0 1.5rem;
+    display: grid;
+    gap: 0.95rem;
+    max-width: 100%;
+  }
+  .tool-summary {
+    background: #1c140e;
+    border: 2px solid var(--line);
+    border-radius: 18px;
+    padding: 0.95rem 1rem;
+  }
+  .tool-score-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .tool-kicker {
+    margin: 0;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent-hover);
+  }
+  .tool-headline {
+    margin: 0.2rem 0 0;
+    font-size: 1.08rem;
+    color: #fff;
+  }
+  .tool-reset {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--muted);
+    border-radius: 999px;
+    padding: 0.3rem 0.75rem;
+    font-size: 0.82rem;
+    cursor: pointer;
+  }
+  .tool-reset:hover {
+    border-color: var(--accent);
+    color: #fff;
+  }
+  .tool-bar {
+    height: 0.68rem;
+    background: #2c2218;
+    border-radius: 999px;
+    overflow: hidden;
+    margin: 0.7rem 0 0.75rem;
+    border: 1px solid var(--line);
+  }
+  .tool-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--olive-2), var(--accent));
+    transition: width 0.2s ease;
+  }
+  .tool-cat-meters {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.45rem;
+  }
+  @media (min-width: 680px) {
+    .tool-cat-meters {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  .cat-meter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.35rem;
+    background: #241910;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 0.35rem 0.55rem;
+    font-size: 0.82rem;
+    min-width: 0;
+  }
+  .cat-meter span {
+    color: var(--muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .cat-meter strong {
+    color: #fff;
+    flex: none;
+  }
+  .tool-controls {
+    display: grid;
+    gap: 0.65rem;
+  }
+  .tool-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .tool-pill {
+    background: #241910;
+    border: 1px solid var(--line);
+    color: var(--ink);
+    border-radius: 999px;
+    padding: 0.3rem 0.68rem;
+    font-size: 0.82rem;
+    cursor: pointer;
+  }
+  .tool-pill.active,
+  .tool-pill:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+  .tool-search-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    align-items: center;
+  }
+  .tool-input {
+    flex: 1 1 13rem;
+    min-width: 0;
+    width: 100%;
+    background: #16120c;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 0.45rem 0.7rem;
+    font-size: 0.92rem;
+    color: #fff;
+  }
+  .tool-hide-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.88rem;
+    color: var(--muted);
+    cursor: pointer;
+  }
+  .chk-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+  .chk-item {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.45rem 0.75rem;
+    background: #241910;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 0.65rem 0.8rem;
+    min-width: 0;
+  }
+  .chk-item.is-done {
+    opacity: 0.68;
+    border-color: var(--olive-2);
+    background: #1a241d;
+  }
+  .chk-item.is-done .chk-title {
+    text-decoration: line-through;
+  }
+  .chk-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    flex: 1 1 14rem;
+    min-width: 0;
+    cursor: pointer;
+  }
+  .chk-box {
+    margin-top: 0.28rem;
+    width: 1.08rem;
+    height: 1.08rem;
+    accent-color: var(--accent);
+    flex: none;
+  }
+  .chk-body {
+    display: grid;
+    gap: 0.2rem;
+    min-width: 0;
+  }
+  .chk-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem;
+  }
+  .chk-title {
+    color: #fff;
+    font-size: 0.98rem;
+    overflow-wrap: anywhere;
+  }
+  .chk-verified {
+    font-size: 0.74rem;
+    color: #b7e0c2;
+  }
+  .chk-desc {
+    color: var(--muted);
+    font-size: 0.9rem;
+    overflow-wrap: anywhere;
+  }
+  .chk-link {
+    font-size: 0.82rem;
+    color: var(--link);
+    text-decoration: none;
+    white-space: nowrap;
+    align-self: center;
+  }
+  .chk-empty {
+    margin: 0.4rem 0;
+    color: var(--muted);
+    font-style: italic;
+  }
+  .fest-box {
+    background: #1c140e;
+    border: 1px dashed var(--line);
+    border-radius: 16px;
+    padding: 0.85rem 0.95rem;
+  }
+  .fest-box h3 {
+    margin: 0 0 0.25rem;
+    font-size: 1.1rem;
+  }
+  .fest-sub {
+    margin: 0 0 0.65rem;
+    font-size: 0.88rem;
+    color: var(--muted);
+  }
+</style>

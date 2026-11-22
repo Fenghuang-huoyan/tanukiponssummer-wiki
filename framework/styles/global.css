@@ -471,19 +471,36 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 700; letter-spacing: 0.01em
 .checked b { color: var(--ink); font-weight: 600; }
 .prose { max-width: var(--measure); }
 @media (min-width: 1040px) {
-  .guide .prose:has(.code-board) { max-width: none; }
-  .guide .prose:has(.code-board) > :not(.code-board) { max-width: var(--measure); }
+  .guide .prose:has(.code-board),
+  .guide .prose:has(.tanuki-tool) { max-width: none; }
+  .guide .prose:has(.code-board) > :not(.code-board),
+  .guide .prose:has(.tanuki-tool) > :not(.tanuki-tool):not(.table-scroll) { max-width: var(--measure); }
 }
 .prose h2 { margin: 1.6rem 0 0.4rem; font-size: 1.7rem; color: #fff; text-transform: uppercase; }
 .prose h3 { margin: 1.2rem 0 0.3rem; font-size: 1.25rem; color: #fff; }
 .prose p, .prose li { color: #efe4d4; }
 .prose a { color: var(--link); text-underline-offset: 0.15em; }
 .prose ul, .prose ol { padding-left: 1.2rem; }
+.table-scroll {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 0.8rem 0 1rem;
+  border-radius: 10px;
+}
+.table-scroll > table {
+  margin: 0;
+  min-width: 30rem;
+}
 .prose table {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.95rem;
   margin: 0.8rem 0 1rem;
+}
+.prose .table-scroll table {
+  margin: 0;
 }
 .prose th, .prose td {
   text-align: left;
@@ -491,20 +508,62 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 700; letter-spacing: 0.01em
   padding: 0.45rem 0.5rem;
   border-bottom: 1px solid var(--line);
 }
-/* The guide card clips with overflow:hidden so the banner can bleed to the
-   rounded corners. A wide fact table then loses its right edge instead of
-   wrapping. Below this width the card's content box is narrower than that
-   table's min-content (~318px). Code tables keep their own scroll wrapper. */
-@media (max-width: 382px) {
-  .prose table:not(.code-table) {
+/* Fallback for any unwrapped prose table on narrow screens up to 420px (covers 390px and 320px).
+   Tables wrapped in .table-scroll keep clean horizontal scrolling without squishing columns. */
+@media (max-width: 420px) {
+  .prose table:not(.code-table):not(.table-scroll table) {
     table-layout: fixed;
   }
-  .prose table:not(.code-table) :is(th, td):first-child {
+  .prose table:not(.code-table):not(.table-scroll table) :is(th, td):first-child {
     width: 8rem;
   }
-  .prose table:not(.code-table) :is(th, td) {
+  .prose table:not(.code-table):not(.table-scroll table) :is(th, td) {
     overflow-wrap: anywhere;
   }
+}
+
+.hub-strip {
+  background: var(--surface);
+  border: 2px solid var(--line);
+  border-radius: 20px;
+  padding: 1.1rem 1.2rem;
+  box-shadow: 5px 5px 0 rgba(226, 90, 42, 0.28);
+}
+.hub-strip-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem 1rem;
+  margin-bottom: 0.75rem;
+}
+.hub-strip-head h2 {
+  margin: 0;
+  font-size: clamp(1.35rem, 2.4vw, 1.75rem);
+}
+.hub-strip-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.hub-strip-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  text-decoration: none;
+  background: #241910;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 0.38rem 0.8rem;
+  font-size: 0.92rem;
+}
+.hub-strip-links a:hover {
+  border-color: var(--accent);
+  color: #fff;
 }
 .prose th { font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
 .prose img {
@@ -520,6 +579,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 700; letter-spacing: 0.01em
   padding: 0.05rem 0.3rem;
   border-radius: 6px;
   border: 1px solid var(--line);
+  overflow-wrap: anywhere;
 }
 .callout {
   border-radius: 16px;

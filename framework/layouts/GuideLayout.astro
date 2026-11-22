@@ -3,7 +3,7 @@ import BaseLayout from './BaseLayout.astro';
 import QuickAnswer from '../components/QuickAnswer.astro';
 import Toc from '../components/Toc.astro';
 import AdSlot from '../components/AdSlot.astro';
-import { articleJsonLd } from '../lib/seo';
+import { articleJsonLd, breadcrumbJsonLd } from '../lib/seo';
 
 interface Heading {
   depth: number;
@@ -25,6 +25,14 @@ interface Props {
   extraJsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 const props = Astro.props;
+const cleanPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+const includeHubCrumb = cleanPath !== '/guides' && cleanPath !== '/about';
+const crumbs = [
+  { name: 'Home', pathname: '/' },
+  ...(includeHubCrumb ? [{ name: 'All Guides', pathname: '/guides' }] : []),
+  { name: props.section, pathname: cleanPath },
+];
+const breadcrumb = breadcrumbJsonLd(crumbs);
 const article = articleJsonLd({
   title: props.title,
   description: props.description,
@@ -36,7 +44,7 @@ const extra = props.extraJsonLd
     : [props.extraJsonLd]
   : [];
 ---
-<BaseLayout title={props.title} description={props.description} jsonLd={[article, ...extra]}>
+<BaseLayout title={props.title} description={props.description} jsonLd={[article, breadcrumb, ...extra]}>
   <main id="content" class="shell layout">
     <article class="guide">
       <img
@@ -48,7 +56,10 @@ const extra = props.extraJsonLd
         decoding="async"
       />
       <header class="page-head">
-        <p class="crumbs"><a href="/">Home</a> / {props.section}</p>
+        <p class="crumbs">
+          <a href="/">Home</a>
+          {includeHubCrumb && <> / <a href="/guides">All Guides</a></>} / {props.section}
+        </p>
         <p class="kicker">{props.section}</p>
         <h1>{props.h1}</h1>
         <p class="checked"><b>Sources checked</b> <span>{props.verifiedAgainst}</span></p>

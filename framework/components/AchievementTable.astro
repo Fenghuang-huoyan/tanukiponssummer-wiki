@@ -1,0 +1,138 @@
+---
+import { loadData } from '../lib/content';
+
+interface AchievementItem {
+  index: number;
+  id: string;
+  apiName: string;
+  name: string;
+  description: string;
+  percent: number;
+  category: string;
+  categoryLabel: string;
+  guideHref: string;
+}
+
+const items = loadData<AchievementItem[]>('achievements');
+---
+
+<div class="tanuki-tool" id="tanuki-ach-browser">
+  <div class="ach-controls">
+    <input
+      type="search"
+      id="ach-search"
+      class="ach-input"
+      placeholder="Filter 43 achievements by name, resident, or task..."
+      aria-label="Filter achievements"
+    />
+    <select id="ach-cat" class="ach-select" aria-label="Filter by category">
+      <option value="all">All 6 Tracks (43)</option>
+      <option value="shrine-story">Shrine & Story (8)</option>
+      <option value="jobs">Resident Delivery Jobs (14)</option>
+      <option value="decorations">Shrine Decorations (2)</option>
+      <option value="bmx">BMX Challenges & Combos (9)</option>
+      <option value="fishing">Island Fishing (5)</option>
+      <option value="insects">Island Insects (5)</option>
+    </select>
+    <select id="ach-sort" class="ach-select" aria-label="Sort achievements">
+      <option value="index">Steam Schema Order</option>
+      <option value="common">Most Unlocked First</option>
+      <option value="rare">Rarest First</option>
+    </select>
+  </div>
+
+  <div class="table-scroll">
+    <table id="ach-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Achievement / Trophy</th>
+          <th>Official Steam Task</th>
+          <th>Track</th>
+          <th>Global Rate (23 Nov 2026)</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="ach-tbody">
+        {items.map((item) => (
+          <tr
+            data-index={item.index}
+            data-pct={item.percent}
+            data-cat={item.category}
+            data-search={`${item.name} ${item.description} ${item.categoryLabel}`.toLowerCase()}
+          >
+            <td>{item.index}</td>
+            <td><strong>{item.name}</strong></td>
+            <td>{item.description}</td>
+            <td><a href={item.guideHref}>{item.categoryLabel}</a></td>
+            <td>{item.percent.toFixed(1)}%</td>
+            <td>Verified / ✔</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  const wrap = document.getElementById('tanuki-ach-browser');
+  if (wrap) {
+    const searchEl = document.getElementById('ach-search') as HTMLInputElement | null;
+    const catEl = document.getElementById('ach-cat') as HTMLSelectElement | null;
+    const sortEl = document.getElementById('ach-sort') as HTMLSelectElement | null;
+    const tbody = document.getElementById('ach-tbody');
+    const rows = tbody ? Array.from(tbody.querySelectorAll<HTMLTableRowElement>('tr')) : [];
+
+    function apply() {
+      const q = (searchEl?.value || '').trim().toLowerCase();
+      const cat = catEl?.value || 'all';
+      const sort = sortEl?.value || 'index';
+
+      const sorted = [...rows].sort((a, b) => {
+        if (sort === 'common') return Number(b.dataset.pct) - Number(a.dataset.pct);
+        if (sort === 'rare') return Number(a.dataset.pct) - Number(b.dataset.pct);
+        return Number(a.dataset.index) - Number(b.dataset.index);
+      });
+
+      sorted.forEach((r) => {
+        const matchCat = cat === 'all' || r.dataset.cat === cat;
+        const matchText = !q || (r.dataset.search || '').includes(q);
+        r.hidden = !(matchCat && matchText);
+        tbody?.appendChild(r);
+      });
+    }
+
+    searchEl?.addEventListener('input', apply);
+    catEl?.addEventListener('change', apply);
+    sortEl?.addEventListener('change', apply);
+  }
+</script>
+
+<style>
+  .ach-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.65rem;
+  }
+  .ach-input {
+    flex: 1 1 13rem;
+    min-width: 0;
+    background: #16120c;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 0.45rem 0.7rem;
+    font-size: 0.9rem;
+    color: #fff;
+  }
+  .ach-select {
+    flex: 1 1 10rem;
+    min-width: 0;
+    background: #241910;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 0.45rem 0.65rem;
+    font-size: 0.88rem;
+    color: var(--ink);
+  }
+</style>
