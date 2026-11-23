@@ -3,6 +3,7 @@ import BaseLayout from './BaseLayout.astro';
 import QuickAnswer from '../components/QuickAnswer.astro';
 import Toc from '../components/Toc.astro';
 import AdSlot from '../components/AdSlot.astro';
+import StoreDealsWidget from '../components/StoreDealsWidget.astro';
 import { articleJsonLd, breadcrumbJsonLd } from '../lib/seo';
 
 interface Heading {
@@ -26,7 +27,8 @@ interface Props {
 }
 const props = Astro.props;
 const cleanPath = Astro.url.pathname.replace(/\/$/, '') || '/';
-const includeHubCrumb = cleanPath !== '/guides' && cleanPath !== '/about';
+const isPolicyPage = ['/about', '/privacy', '/terms', '/contact'].includes(cleanPath);
+const includeHubCrumb = cleanPath !== '/guides' && !isPolicyPage;
 const crumbs = [
   { name: 'Home', pathname: '/' },
   ...(includeHubCrumb ? [{ name: 'All Guides', pathname: '/guides' }] : []),
@@ -72,6 +74,7 @@ const extra = props.extraJsonLd
       <div class="prose">
         <slot />
       </div>
+      {!isPolicyPage && <StoreDealsWidget />}
       <section class="sources">
         <h2>Sources and last check</h2>
         <p>

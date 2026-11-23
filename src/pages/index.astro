@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '@framework/layouts/BaseLayout.astro';
 import QuickAnswer from '@framework/components/QuickAnswer.astro';
 import AdSlot from '@framework/components/AdSlot.astro';
+import StoreDealsWidget from '@framework/components/StoreDealsWidget.astro';
 import FaqList from '@framework/components/FaqList.astro';
 import { loadData } from '@framework/lib/content';
 import { siteConfig } from '@site/site.config';
@@ -24,7 +25,7 @@ const meta = loadData<{
 const faq = loadData<{ q: string; a: string; featured?: boolean }[]>('faq');
 const allPages = (await getCollection('pages')).sort((a, b) => a.data.order - b.data.order);
 const pages = allPages.filter((page) => page.data.order <= 5);
-const extraPages = allPages.filter((page) => page.data.order > 5);
+const extraPages = allPages.filter((page) => page.data.order > 5 && page.data.order < 90);
 
 const art = {
   header: '/images/official/steam/header.jpg',
@@ -224,6 +225,7 @@ const stills = [
           ]}
         />
         <AdSlot name="afterQuickAnswer" />
+        <StoreDealsWidget />
       </section>
 
       <section class="section">
