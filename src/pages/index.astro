@@ -22,7 +22,9 @@ const meta = loadData<{
 }>('meta');
 
 const faq = loadData<{ q: string; a: string; featured?: boolean }[]>('faq');
-const pages = (await getCollection('pages')).sort((a, b) => a.data.order - b.data.order);
+const allPages = (await getCollection('pages')).sort((a, b) => a.data.order - b.data.order);
+const pages = allPages.filter((page) => page.data.order <= 5);
+const extraPages = allPages.filter((page) => page.data.order > 5);
 
 const art = {
   header: '/images/official/steam/header.jpg',
@@ -43,6 +45,14 @@ const guideArt: Record<string, string> = {
   shrine: art.hero,
   bmx: art.rail,
   about: art.header,
+};
+
+const guideAlt: Record<string, string> = {
+  guide: 'Official Steam capsule showing Pon riding a red BMX with parcels',
+  delivery: 'Official Steam screenshot of Pon balancing stacked parcels on a red BMX',
+  shrine: 'Official Steam library hero showing the wooden shrine in a giant tree',
+  bmx: 'Official Steam screenshot of Pon grinding a rooftop rail on a BMX',
+  about: 'Official Steam header banner for TANUKI: Pon’s Summer',
 };
 
 const doors = [
@@ -225,7 +235,7 @@ const stills = [
           {pages.map((page) => (
             <a class="guide-card" href={`/${page.id}`}>
               <span class="card-art">
-                <img src={guideArt[page.id] ?? art.header} alt="" width="600" height="338" loading="lazy" decoding="async" />
+                <img src={guideArt[page.id] ?? art.header} alt={guideAlt[page.id] ?? page.data.bannerAlt} width="600" height="338" loading="lazy" decoding="async" />
               </span>
               <span class="card-copy">
                 <span class="section-tag">{page.data.section}</span>
@@ -236,6 +246,24 @@ const stills = [
           ))}
         </div>
       </section>
+
+      {extraPages.length > 0 && (
+        <section class="section" aria-label="All guides and tools directory">
+          <div class="hub-strip">
+            <div class="hub-strip-head">
+              <h2>Tools &amp; reference index</h2>
+              <a class="text-link" href="/guides">Open All Guides Hub →</a>
+            </div>
+            <ul class="hub-strip-links">
+              {extraPages.map((page) => (
+                <li>
+                  <a href={`/${page.id}`}>{page.data.section}: {page.data.h1}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
 
       <section class="section">
         <div class="scope">

@@ -1,0 +1,67 @@
+---
+title: "TANUKI: Pon's Summer Completion Checklist — Shrine, Jobs & 100% Tracker"
+description: "Interactive completion checklist for TANUKI: Pon's Summer. Track all 8 shrine and story milestones, 14 resident delivery jobs, decorations, BMX tiers, and fish/insect sets locally in your browser."
+h1: "Shrine, jobs, and 100% completion checklist"
+section: "Checklist"
+order: 6
+verifiedAgainst: "All 43 Steam achievement names, official descriptions, and global unlock percentages for AppID 3218570 checked on 23 Nov 2026, plus the 10 Nov 2026 launch announcement for festival-day checks. Coin costs, item recipes, and mandatory unlock sequences remain Unverified / ❓."
+quickAnswer:
+  - "This browser checklist tracks all 43 official milestones published in Steam's achievement list for TANUKI: Pon's Summer: 8 story and shrine restoration steps, 2 decoration purchase tiers, 14 resident delivery jobs, 9 BMX challenge and score milestones, 5 fishing sets, and 5 insect sets."
+  - "Your checked boxes save automatically in your browser's local storage (no account or save-file upload required). Use the category pills, search box, or Hide completed toggle to plan your next in-game day."
+  - "Three extra festival-day checks named in the 10 November 2026 launch post—enough benches, enough lamps, and standing torii gates—are listed separately below because exact numerical quotas are Unverified / ❓."
+  - "Steam does not publish coin prices, crafting material counts, or a strict required order among resident jobs and mid-month shrine repairs; those values stay marked Unverified / ❓."
+sources:
+  - label: "Steam achievements — TANUKI: Pon's Summer"
+    url: "https://steamcommunity.com/stats/3218570/achievements"
+  - label: "Steam global achievement percentages API"
+    url: "https://api.steampowered.com/ISteamUserStats/GetGlobalAchievementPercentagesForApp/v2/?gameid=3218570"
+  - label: "Steam store — TANUKI: Pon's Summer"
+    url: "https://store.steampowered.com/app/3218570/TANUKI_Pons_Summer/"
+  - label: "Steam announcement — out now, 10 Nov 2026"
+    url: "https://steamcommunity.com/games/3218570/announcements/detail/1848664643358721"
+related:
+  - href: "/guides"
+    label: "All guides hub"
+  - href: "/shrine"
+    label: "Shrine upgrades"
+  - href: "/guide"
+    label: "Month walkthrough"
+  - href: "/achievements"
+    label: "Achievement & trophy table"
+  - href: "/bmx"
+    label: "BMX challenges"
+banner: "/images/official/steam/library-hero.jpg"
+bannerAlt: "Official Steam library hero for TANUKI: Pon's Summer: a wooden shrine in a giant tree overlooking the island town"
+---
+
+import Callout from '@framework/components/Callout.astro';
+import TanukiChecklist from '@framework/components/TanukiChecklist.astro';
+
+Use this interactive tracker to keep tabs on your month in **TANUKI: Pon's Summer** without spoilers or invented numbers. Every main row below corresponds directly to one of the **43 official Steam achievements** (**Verified / ✔** on 23 November 2026), grouped into the six tracks you work through before and alongside the Great Tanuki Matsuri.
+
+## Interactive progress tracker
+
+Check off any milestone as you finish it in-game. Progress stays in your own browser (`localStorage`) on this device. Every item description is also printed directly on the page so you can skim or search the full list at any time.
+
+<TanukiChecklist />
+
+## How the 43 milestones break down
+
+If you are deciding whether to aim strictly for hosting the festival or to push for full completion, the official Steam tracks split into mandatory festival framing and optional collection mastery:
+
+<div class="table-scroll">
+
+| Track | Count | What the official descriptions cover | Festival requirement status |
+| --- | --- | --- | --- |
+| **Shrine & Story** | 8 | Opening tutorial, first Post Office shift, Shrine Building tutorial, Torii Gate, Chozuya, Komainu Statues, Ema Stand, and hosting the Great Tanuki Matsuri. | **Verified / ✔** core progression framing; strict order among later repairs is **Unverified / ❓** |
+| **Shrine Decorations** | 2 | Purchasing over 50 (*Shrine Spender*) and over 100 (*Dedicated Decorator*) shrine decorations. | Launch post mentions benches and lamps (**Verified / ✔**); exact required count is **Unverified / ❓** |
+| **Resident Jobs** | 14 | Delivering to 14 named island residents (Sakamori, Tetsuo, Hitomi, Kacho, Kushida, Musashi, Ryota, Fukushima, Danzo, Nami, Takuma, Rei, Taiga, Tamako) and completing each resident's activity. | Earnings and items fund the shrine (**Verified / ✔**); mandatory completion of all 14 before festival day is **Unverified / ❓** |
+| **BMX & Combos** | 9 | Clearing 10, 25, 50, and all BMX challenges, landing 25K / 50K / 75K / 100K trick combos, and scoring over 1,000,000 points in a single day. | Separate challenge & score track (**Verified / ✔**); not listed as shrine material |
+| **Island Fishing** | 5 | Catching all Common, Rare, Epic, Legendary, and total island fish (unlocked after delivering to Ryota in *Frustrated Fishing*). | Optional collection set; festival gate status **Unverified / ❓** |
+| **Island Insects** | 5 | Catching all Common, Rare, Epic, Legendary, and total island insects (unlocked after delivering to Musashi in *Final Summer*). | Optional collection set; festival gate status **Unverified / ❓** |
+
+</div>
+
+<Callout kind="note" title="Reading the Steam unlock percentages">
+The percentages shown on each row come from Steam's public `GetGlobalAchievementPercentagesForApp` endpoint for AppID `3218570` on **23 November 2026**. They show how often Steam players have cleared a milestone so far—for example, *A Heavy Weight* (sumo with Tetsuo, **61.1%**) happens right alongside *Postal Probation* (**61.2%**), whereas catching every fish or insect sits at **0.5%**. Those numbers reflect player progression, not an enforced quest order (**Unverified / ❓**).
+</Callout>

@@ -52,3 +52,16 @@ export function faqJsonLd(items: { q: string; a: string }[]) {
     })),
   };
 }
+
+export function breadcrumbJsonLd(items: { name: string; pathname: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, idx) => ({
+      '@type': 'ListItem',
+      position: idx + 1,
+      name: item.name,
+      item: canonicalUrl(item.pathname),
+    })),
+  };
+}

@@ -39,28 +39,38 @@ export const siteConfig = {
     "tanukiponssummer.wiki is an unofficial fan-made guide for TANUKI: Pon's Summer. It is not affiliated with, endorsed by, or sponsored by Denkiworks, CRITICAL REFLEX, or Valve. All game content, names, artwork, and trademarks belong to their respective owners. This site does not sell the game, recover accounts, or invent route maps, upgrade trees, or challenge lists. The support email in the footer is the one printed on the Steam store page. This wiki does not read that mailbox.",
   nav: [
     { href: '/', label: 'Home' },
-    { href: '/guide', label: 'Guide' },
-    { href: '/delivery', label: 'Delivery' },
+    { href: '/guides', label: 'Guides' },
+    { href: '/checklist', label: 'Checklist' },
+    { href: '/guide', label: 'Walkthrough' },
     { href: '/shrine', label: 'Shrine' },
     { href: '/bmx', label: 'BMX' },
   ],
   moreNav: [
+    { href: '/delivery', label: 'Delivery' },
+    { href: '/achievements', label: 'Achievements' },
+    { href: '/map', label: 'Map & Locations' },
+    { href: '/how-long-to-beat', label: 'How Long to Beat' },
     { href: '/about', label: 'About' },
     { href: '/about#disclaimer', label: 'Disclaimer' },
     { href: '/about#privacy', label: 'Privacy' },
   ],
   footerNav: [
     { href: '/', label: 'Home' },
+    { href: '/guides', label: 'All Guides' },
+    { href: '/checklist', label: 'Completion Checklist' },
     { href: '/guide', label: 'Guide' },
     { href: '/delivery', label: 'Delivery' },
     { href: '/shrine', label: 'Shrine' },
     { href: '/bmx', label: 'BMX' },
+    { href: '/achievements', label: 'Achievements' },
+    { href: '/map', label: 'Map & Locations' },
+    { href: '/how-long-to-beat', label: 'How Long to Beat' },
     { href: '/about', label: 'About' },
   ],
   version: {
-    label: 'Checked 12 Nov 2026',
+    label: 'Checked 23 Nov 2026',
     detail:
-      'Store text, price, platforms, languages, categories, requirements, and the highlighted achievement names are from the Steam appdetails API in English on 12 Nov 2026. The publisher page, the 10 Nov 2026 press release, and the Steam community announcements through 11 Nov 2026 were read the same day. No client was played for this pass.',
+      'Store text, US price ($19.99), platforms, languages, categories, requirements, and all 43 Steam achievements with global unlock rates were checked against the Steam store API and Steam community stats in English on 23 Nov 2026, alongside the publisher page, the 10 Nov 2026 press release, and Steam community announcements through 13 Nov 2026.',
   },
   databases: [
     {
