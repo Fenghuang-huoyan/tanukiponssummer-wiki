@@ -1,0 +1,125 @@
+---
+import { getActiveStoreOffers, monetizationConfig } from '@site/monetization.config';
+import { siteConfig } from '@site/site.config';
+
+interface Props {
+  compact?: boolean;
+}
+const { compact = false } = Astro.props;
+const activeOffers = getActiveStoreOffers();
+const hasAffiliate = activeOffers.some((o) => o.isAffiliate);
+---
+{activeOffers.length > 0 && (
+  <section class:list={['deals-box', compact && 'deals-compact']} aria-label={`Where to buy ${siteConfig.gameTitle}`}>
+    <div class="deals-head">
+      <p class="deals-kicker">Official Storefront &amp; Editions</p>
+      <h2>Get {siteConfig.gameTitle}</h2>
+    </div>
+    <ul class="deals-list">
+      {activeOffers.map((offer) => (
+        <li class="deals-item">
+          <div class="deals-meta">
+            <strong>{offer.storeName}</strong>
+            <span>{offer.drm} · {offer.badge}</span>
+          </div>
+          <a
+            class="deals-btn"
+            href={offer.resolvedUrl}
+            target="_blank"
+            rel={offer.isAffiliate ? 'sponsored noopener noreferrer' : 'noopener noreferrer'}
+          >
+            <span>{offer.priceLabel}</span> →
+          </a>
+        </li>
+      ))}
+    </ul>
+    {hasAffiliate && <p class="deals-note">{monetizationConfig.disclosure}</p>}
+  </section>
+)}
+
+<style>
+  .deals-box {
+    margin: 1.25rem 0;
+    padding: 1rem 1.1rem;
+    background: #fbf6ec;
+    border: 2px solid #5c4632;
+    border-radius: 6px;
+    box-sizing: border-box;
+    max-width: 100%;
+  }
+  .deals-compact {
+    margin: 1rem 0 0;
+    padding: 0.85rem 0.95rem;
+  }
+  .deals-kicker {
+    margin: 0 0 0.2rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #7c5227;
+  }
+  .deals-head h2 {
+    margin: 0 0 0.75rem;
+    font-size: 1.05rem;
+    line-height: 1.3;
+    color: #1f1912;
+  }
+  .deals-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .deals-item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.55rem 0.75rem;
+    padding: 0.55rem 0.65rem;
+    background: #fffdf8;
+    border: 1px solid #dccbb3;
+    border-radius: 4px;
+  }
+  .deals-meta {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    gap: 0.12rem;
+  }
+  .deals-meta strong {
+    font-size: 0.9rem;
+    color: #1f1912;
+    overflow-wrap: anywhere;
+  }
+  .deals-meta span {
+    font-size: 0.76rem;
+    color: #5c4b39;
+    overflow-wrap: anywhere;
+  }
+  .deals-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.42rem 0.78rem;
+    background: #9f3e1c;
+    color: #fffaf2 !important;
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .deals-btn:hover {
+    background: #7f2f13;
+  }
+  .deals-note {
+    margin: 0.65rem 0 0;
+    font-size: 0.74rem;
+    line-height: 1.45;
+    color: #655340;
+  }
+</style>

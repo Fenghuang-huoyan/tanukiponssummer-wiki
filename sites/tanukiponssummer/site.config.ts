@@ -5,6 +5,7 @@ export const siteConfig = {
   gameTitle: "TANUKI: Pon's Summer",
   steamAppId: 3218570,
   steamUrl: 'https://store.steampowered.com/app/3218570/TANUKI_Pons_Summer/',
+  editorialEmail: 'editorial@tanukiponssummer.wiki',
   supportEmail: 'support@criticalreflex.com',
   social: [
     { href: 'https://www.criticalreflex.com/tanuki', label: 'Publisher page' },
@@ -51,8 +52,9 @@ export const siteConfig = {
     { href: '/map', label: 'Map & Locations' },
     { href: '/how-long-to-beat', label: 'How Long to Beat' },
     { href: '/about', label: 'About' },
-    { href: '/about#disclaimer', label: 'Disclaimer' },
-    { href: '/about#privacy', label: 'Privacy' },
+    { href: '/privacy', label: 'Privacy Policy' },
+    { href: '/terms', label: 'Terms' },
+    { href: '/contact', label: 'Contact' },
   ],
   footerNav: [
     { href: '/', label: 'Home' },
@@ -66,6 +68,9 @@ export const siteConfig = {
     { href: '/map', label: 'Map & Locations' },
     { href: '/how-long-to-beat', label: 'How Long to Beat' },
     { href: '/about', label: 'About' },
+    { href: '/privacy', label: 'Privacy Policy' },
+    { href: '/terms', label: 'Terms of Service' },
+    { href: '/contact', label: 'Contact' },
   ],
   version: {
     label: 'Checked 23 Nov 2026',

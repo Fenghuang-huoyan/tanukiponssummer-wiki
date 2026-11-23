@@ -4,10 +4,13 @@ import { adsConfig } from '@site/ads.config';
 
 const year = 2026;
 const gaOn = siteConfig.analytics.gaId.trim().length > 0;
-const adsOn = Object.values(adsConfig.slots).some((slot) => {
-  const id = slot.id.trim();
-  return adsConfig.enabled && id.length > 0 && !id.startsWith('ADSTERRA_');
-});
+const adsenseOn = adsConfig.adsense.enabled && adsConfig.adsense.client.trim().length > 0;
+const adsterraOn =
+  adsConfig.network === 'adsterra' &&
+  Object.values(adsConfig.slots).some((slot) => {
+    const id = slot.id.trim();
+    return adsConfig.enabled && id.length > 0 && !id.startsWith('ADSTERRA_');
+  });
 ---
 <footer class="site-footer">
   <div class="shell">
@@ -44,9 +47,12 @@ const adsOn = Object.values(adsConfig.slots).some((slot) => {
         {gaOn
           ? 'Google Analytics is enabled with the measurement id in site config.'
           : 'Google Analytics is not loaded, because analytics.gaId is empty.'}
-        {adsOn
-          ? ' A labeled Adsterra placement loads where a zone key is set.'
-          : ' Advertisements are not loaded, because the Adsterra Native Banner zone key is still empty.'}
+        {adsenseOn
+          ? ' Google AdSense advertisements load in compliance with our Privacy Policy.'
+          : adsterraOn
+            ? ' A labeled native banner placement loads where configured.'
+            : ' Third-party ad scripts are currently turned off.'}
+        {' '}Read full details in our <a href="/privacy">Privacy Policy</a>, <a href="/terms">Terms of Service</a>, and <a href="/contact">Contact</a> pages.
       </p>
       <p>© {year} {siteConfig.domain}. {siteConfig.gameTitle} © {siteConfig.publisher}. Steam AppID {siteConfig.steamAppId}.</p>
     </div>

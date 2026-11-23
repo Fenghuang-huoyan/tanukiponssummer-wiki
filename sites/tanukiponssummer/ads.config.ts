@@ -1,13 +1,14 @@
 /**
- * Adsterra Native Banner, directly after Quick Answer on the homepage and guide pages.
+ * Advertising configuration for tanukiponssummer.wiki.
  *
- * Zone and script are this domain's own Get Code. Do not paste a key or host from another game.
- * Adult and sensitive categories stay off. The 404 page does not render a slot.
+ * AdSense-first clean mode:
+ * - Third-party Adsterra script (`bauval.org`) is turned OFF so Google AdSense review sees a 100% clean site.
+ * - Once `public/ads.txt` is deployed and verified in the AdSense console, set `adsense.enabled = true`
+ *   and fill `adsense.client` (e.g. `ca-pub-XXXXXXXXXXXXXXXX`) to inject the official AdSense head tag.
  */
 export type AdSlotConfig = {
   id: string;
   format: string;
-  /** Full script URL. When set, used instead of `${invokeBase}/${id}/invoke.js`. */
   scriptSrc?: string;
   invokeBase?: string;
   containerPrefix?: string;
@@ -22,11 +23,16 @@ const slots = {
 } as const satisfies Record<string, AdSlotConfig>;
 
 export const adsConfig = {
-  network: 'adsterra' as const,
-  enabled: true,
+  network: 'adsense' as 'adsense' | 'adsterra' | 'none',
+  /** Keep Adsterra OFF during Google AdSense review and normal high-RPM operation. */
+  enabled: false,
+  adsense: {
+    enabled: false,
+    /** Example: 'ca-pub-1234567890123456' — fill after deploying public/ads.txt */
+    client: '',
+  },
   invokeBase: '',
-  /** Site-wide full script URL. A slot `scriptSrc` overrides this. */
-  scriptSrc: 'https://bauval.org/21/f989d0f6f9b21ee2ee7c4c62b3e3d68d',
+  scriptSrc: '',
   containerPrefix: 'container-',
   slots,
 };
@@ -47,6 +53,7 @@ export function resolveAdPlacement(name: AdSlotName) {
     containerId: `${containerPrefix}${id}`,
     scriptSrc,
     active:
+      adsConfig.network === 'adsterra' &&
       adsConfig.enabled &&
       id.length > 0 &&
       !id.startsWith('ADSTERRA_') &&
