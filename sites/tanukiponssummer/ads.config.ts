@@ -27,9 +27,9 @@ export const adsConfig = {
   /** Keep Adsterra OFF during Google AdSense review and normal high-RPM operation. */
   enabled: false,
   adsense: {
-    enabled: false,
+    enabled: true,
     /** Example: 'ca-pub-1234567890123456' — fill after deploying public/ads.txt */
-    client: '',
+    client: 'ca-pub-2671209221089689',
   },
   invokeBase: '',
   scriptSrc: '',
